@@ -26,6 +26,7 @@
     "resolveJsonModule": true,
     "useDefineForClassFields": true,
     "ignoreDeprecations": "5.0",
-    "types": ["chrome"]
+    "types": ["chrome"],
+    "esModuleInterop": true
   }
 }

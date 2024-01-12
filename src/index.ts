@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title") as HTMLInputElement;
   const selectFolderButton = document.getElementById("selectFolder") as HTMLButtonElement;
+  const editorInput = document.getElementById("editor") as HTMLInputElement
 
   function updateTitle() {
     if (typeof chrome !== "undefined" && chrome.tabs) {
@@ -20,13 +21,32 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch and set the title on page load
   updateTitle();
 
-  // Add click event listener for updating the title on button click
-  if (selectFolderButton) {
-    selectFolderButton.addEventListener("click", updateTitle);
-  }
-
-  //opening in another page
+  // Add click event listener for copying to clipboard on openExtension button click
   document.getElementById('openExtension')?.addEventListener('click', function () {
+    // Get the values of titleInput and editorInput
+    const titleValue = titleInput.value;
+    const editorValue = editorInput.value;
+
+    // Concatenate the values
+    const combinedValue = titleValue + ' ' + editorValue;
+
+    // Create a temporary textarea element
+    const tempTextarea = document.createElement('textarea');
+    tempTextarea.value = combinedValue;
+
+    // Append the textarea to the document body
+    document.body.appendChild(tempTextarea);
+
+    // Select the content of the textarea
+    tempTextarea.select();
+    
+    // Copy the selected content to the clipboard
+    navigator.clipboard.writeText('text to be copied');
+
+    // Remove the temporary textarea
+    document.body.removeChild(tempTextarea);
+
+    // Open the extension page
     chrome.tabs.create({
       url: 'reviewNotes.html',
       active: true
