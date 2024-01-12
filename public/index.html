@@ -8,8 +8,8 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      max-width: 400px; /* Adjust the max-width as needed */
-      margin: auto; /* Center the pop-up */
+      max-width: 400px;
+      margin: auto;
     }
     label {
       display: block;
@@ -20,10 +20,9 @@
       padding: 8px;
       margin-bottom: 15px;
       box-sizing: border-box;
-      resize: vertical; /* Allow vertical resizing */
-      overflow-y: auto; /* Enable vertical scrollbar when needed */
+      resize: vertical;
+      overflow-y: auto;
     }
-    /* Adjust the width of the textarea */
     textarea {
       width: 100%;
     }
@@ -40,42 +39,33 @@
   <label for="editor">Text Editor:</label>
   <textarea id="editor" rows="10" placeholder="Type your text here"></textarea>
 
-  <label for="folderPicker">Save to:</label>
-  <input type="file" id="folderPicker" webkitdirectory directory style="display:none;">
   <button id="selectFolder">Select Folder</button>
 
-  <script src="index.js"></script>
   <script>
-    document.getElementById('selectFolder').addEventListener('click', function() {
-      // Get the title and text editor content
-      var title = document.getElementById('title').value;
-      var editorContent = document.getElementById('editor').value;
-  
-      // Create an array of parts for the text file
-      var textArray = [title, "\n\n", editorContent];
-  
-      // Create a Blob with the text content
-      var blob = new Blob(textArray, { type: "text/plain" });
-  
-      // Create a temporary anchor element
-      var downloadLink = document.createElement('a');
-  
-      // Set the href attribute with the download URL
-      downloadLink.href = URL.createObjectURL(blob);
-  
-      // Set the download attribute with the desired filename
-      downloadLink.download = title + ".txt";
-  
-      // Append the anchor element to the document body
-      document.body.appendChild(downloadLink);
-  
-      // Trigger a click on the anchor element to initiate the download
-      downloadLink.click();
-  
-      // Remove the anchor element from the document body
-      document.body.removeChild(downloadLink);
+    document.getElementById('selectFolder').addEventListener('click', async function () {
+      try {
+        const suggestedName = document.getElementById('title').value || 'Untitled';
+        const fileHandle = await showSaveFilePicker({ suggestedName: suggestedName + '.md' });
 
+        // Get the title and text editor content
+        const title = document.getElementById('title').value;
+        const editorContent = document.getElementById('editor').value;
+
+        // Create an array of parts for the text file
+        const textArray = [`# ${title}\n\n`, editorContent];
+
+        // Create a Blob with the text content
+        const blob = new Blob(textArray, { type: "text/markdown" });
+
+        // Create a FileWriter and write the Blob to the file
+        const writable = await fileHandle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+      } catch (error) {
+        console.error("Error selecting folder:", error);
+      }
     });
   </script>
+  <script src="index.js"></script>
 </body>
 </html>
