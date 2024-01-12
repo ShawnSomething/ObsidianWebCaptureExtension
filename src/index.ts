@@ -1,11 +1,16 @@
-/**
- * This file is just a silly example to show everything working in the browser.
- * When you're ready to start on your site, clear the file. Happy hacking!
- **/
+document.addEventListener('DOMContentLoaded', () => {
+  const titleInput = document.getElementById('title') as HTMLInputElement;
+  const createNewFileButton = document.getElementById('createNewFile') as HTMLButtonElement;
 
-import confetti from 'canvas-confetti';
-
-confetti.create(document.getElementById('canvas') as HTMLCanvasElement, {
-  resize: true,
-  useWorker: true,
-})({ particleCount: 200, spread: 200 });
+  createNewFileButton.addEventListener('click', () => {
+    // Get the current URL of the active tab
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentURL = tabs[0]?.url;
+      
+      // Set the title input value to the current URL
+      if (currentURL) {
+        titleInput.value = currentURL;
+      }
+    });
+  });
+});

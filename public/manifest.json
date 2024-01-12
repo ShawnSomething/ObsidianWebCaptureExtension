@@ -6,8 +6,16 @@
         "default_popup": "index.html"
     },
     "permissions": [
-        "scripting"
+        "scripting",
+        "downloads",
+        "tabs"
     ],
+
+    "background": {
+        "scripts": ["index.js"],
+        "persistent": false
+      },
+      
     "host_permissions": [
         "http://*/*",
         "https://*/*"

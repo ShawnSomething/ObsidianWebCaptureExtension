@@ -8,18 +8,24 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
+      max-width: 400px; /* Adjust the max-width as needed */
+      margin: auto; /* Center the pop-up */
     }
     label {
       display: block;
       margin-bottom: 5px;
     }
     input, textarea {
-      width: 100%;
+      width: 400px;
       padding: 8px;
       margin-bottom: 15px;
       box-sizing: border-box;
       resize: vertical; /* Allow vertical resizing */
       overflow-y: auto; /* Enable vertical scrollbar when needed */
+    }
+    /* Adjust the width of the textarea */
+    textarea {
+      width: 100%;
     }
     button {
       padding: 10px;
@@ -34,12 +40,50 @@
   <label for="editor">Text Editor:</label>
   <textarea id="editor" rows="10" placeholder="Type your text here"></textarea>
 
-  <label for="filePicker">Save to:</label>
-  <input type="file" id="filePicker">
+  <label for="folderPicker">Save to:</label>
+  <input type="file" id="folderPicker" webkitdirectory directory style="display:none;">
+  <button id="selectFolder">Select Folder</button>
 
-  <button id="createNewFile">New</button>
-  <button id="save">Save</button>
+  <script>
+    document.getElementById('selectFolder').addEventListener('click', function() {
+      // Get the title and text editor content
+      var title = document.getElementById('title').value;
+      var editorContent = document.getElementById('editor').value;
+  
+      // Create an array of parts for the text file
+      var textArray = [title, "\n\n", editorContent];
+  
+      // Create a Blob with the text content
+      var blob = new Blob(textArray, { type: "text/plain" });
+  
+      // Create a temporary anchor element
+      var downloadLink = document.createElement('a');
+  
+      // Set the href attribute with the download URL
+      downloadLink.href = URL.createObjectURL(blob);
+  
+      // Set the download attribute with the desired filename
+      downloadLink.download = title + ".txt";
+  
+      // Append the anchor element to the document body
+      document.body.appendChild(downloadLink);
+  
+      // Trigger a click on the anchor element to initiate the download
+      downloadLink.click();
+  
+      // Remove the anchor element from the document body
+      document.body.removeChild(downloadLink);
 
-  <script src="index.ts"></script>
+      // If you're in a Chrome extension context, use chrome.downloads.download
+    if (chrome.downloads) {
+      chrome.downloads.download({
+        url: URL.createObjectURL(blob),
+        filename: relativePath,
+        saveAs: true // Show the Save As dialog
+      });
+    }
+    });
+  </script>
+  <script src="index.js"></script>
 </body>
 </html>
