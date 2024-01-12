@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Obsidian Capture Tool</title>
+  <title>Review Notes</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -33,14 +33,15 @@
   </style>
 </head>
 <body>
-  <label for="title">Title:</label>
-  <input type="text" id="title" placeholder="Enter title">
+  <label for="mappedTitle">Title:</label>
+  <input type="text" id="mappedTitle" placeholder="mappedTitle">
 
   <label for="editor">Text Editor:</label>
   <textarea id="editor" rows="10" placeholder="Type your text here"></textarea>
-  
+
+  <button id="selectFolder">Save To</button>
   <button id="openExtension">Review Notes</button>
 
-  <script src="index.js"></script>
+  <script src="reviewNotes.js"></script>
 </body>
 </html>

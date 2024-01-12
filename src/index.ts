@@ -1,32 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const titleInput: HTMLInputElement | null = document.getElementById("title") as HTMLInputElement;
-  const selectFolderButton: HTMLElement | null = document.getElementById("selectFolder");
-  
-  if (titleInput && selectFolderButton) {
-    // Fetch and set the title on page load
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const currentURL: string | undefined = tabs[0]?.url;
-      if (currentURL) {
-        titleInput.value = currentURL;
-      }
-    });
+  const titleInput = document.getElementById("title") as HTMLInputElement;
+  const selectFolderButton = document.getElementById("selectFolder") as HTMLButtonElement;
 
-    // Add click event listener for updating the title on button click
-    selectFolderButton.addEventListener("click", () => {
-      if (typeof chrome !== "undefined" && chrome.tabs) {
-        // Running in a Chrome extension environment
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-          const currentURL: string | undefined = tabs[0]?.url;
-          if (currentURL) {
-            titleInput.value = currentURL;
-          }
-        });
-      } else {
-        // Running on a regular webpage
-        // Implement an alternative method to get the URL
-        // For example, you can use window.location.href
-        titleInput.value = window.location.href;
-      }
-    });
+  function updateTitle() {
+    if (typeof chrome !== "undefined" && chrome.tabs) {
+      // Running in a Chrome extension environment
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const currentURL = tabs[0]?.url;
+        if (currentURL) {
+          titleInput.value = currentURL;
+        }
+      });
+    } else {
+      // Running on a regular webpage
+      titleInput.value = window.location.href;
+    }
   }
+
+  // Fetch and set the title on page load
+  updateTitle();
+
+  // Add click event listener for updating the title on button click
+  if (selectFolderButton) {
+    selectFolderButton.addEventListener("click", updateTitle);
+  }
+
+  //opening in another page
+  document.getElementById('openExtension')?.addEventListener('click', function () {
+    chrome.tabs.create({
+      url: 'reviewNotes.html',
+      active: true
+    });
+  });
+  
 });

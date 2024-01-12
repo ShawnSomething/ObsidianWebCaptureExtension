@@ -2,13 +2,19 @@
     "manifest_version": 3,
     "version": "1.0.0",
     "name": "obsidianCaptureTool",
+    "description": "Quick Capture for Obsidian",
+    "options_page": "reviewNotes.html",
+    
     "action": {
-        "default_popup": "index.html"
+        "default_popup": "index.html",
+        "default_title": "Obsidian Capture Tool"
     },
     "permissions": [
         "scripting",
         "downloads",
-        "tabs"
+        "tabs",
+        "activeTab",
+        "idle"
     ],
 
     "host_permissions": [
