@@ -1,24 +1,27 @@
-# New Project
+# Obsidian Capture Tool - Chrome Extension
 
-> ✨ Bootstrapped with Create Snowpack App (CSA).
+Allows you to quickly capture notes from the Chrome browser and save it to your local as an .md file
+You can save this to your Obsidian Vault and it will show up there right away
+- I've done this by saving the files to my Google Drive Obsidian Vault
 
-## Available Scripts
+## How to Use it
+- Load the `build` file into the chrome extensions management
+- Pin it to your chrome bar
+- When firing it up: the title will auto-populate with your current url
+![image](https://github.com/ShawnSomething/ObsidianWebCaptureExtension/assets/107730112/d3c5fd39-e99c-4fd4-864e-0106bb54863d)
+- Add notes in as needed
+- Click on Review Notes to open up a new web page
+- Paste your notes in
+- Save it to the file of your choice
 
-### npm start
 
-Runs the app in the development mode.
-Open http://localhost:8080 to view it in the browser.
-
-The page will reload if you make edits.
-You will also see any lint errors in the console.
-
-### npm run build
-
-Builds a static copy of your site to the `build/` folder.
-Your app is ready to be deployed!
-
-**For the best production performance:** Add a build bundler plugin like [@snowpack/plugin-webpack](https://github.com/snowpackjs/snowpack/tree/main/plugins/plugin-webpack) or [snowpack-plugin-rollup-bundle](https://github.com/ParamagicDev/snowpack-plugin-rollup-bundle) to your `snowpack.config.mjs` config file.
-
-### Q: What about Eject?
-
-No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.
+## Shortcomings (might be addressed in the future)
+- Chrome does not let us download files directly from the extension, so would need to open it up in another web page
+- There is also a limitation with mirroring the texts from the extension to the other tab
+  - In this case, I've opted to copy the texts when the Review Notes button is pressed
+      - This then caused another issue with needing to concat the title and the text editor into one
+  - Unable to auto-paste the copied text to the new tab, so manual pasting is required
+- Notes do not persists when the extension is closed but the tab is still active
+  - This will be super useful, but I need to figure out how to do that
+- The Review Notes button is still in the different webpage even though it doesn't do anything
+  - I need to get rid of this, but there are some errors and dependencies that come up when I do, will need to sort that out
