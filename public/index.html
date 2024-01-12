@@ -44,6 +44,7 @@
   <input type="file" id="folderPicker" webkitdirectory directory style="display:none;">
   <button id="selectFolder">Select Folder</button>
 
+  <script src="index.js"></script>
   <script>
     document.getElementById('selectFolder').addEventListener('click', function() {
       // Get the title and text editor content
@@ -74,16 +75,7 @@
       // Remove the anchor element from the document body
       document.body.removeChild(downloadLink);
 
-      // If you're in a Chrome extension context, use chrome.downloads.download
-    if (chrome.downloads) {
-      chrome.downloads.download({
-        url: URL.createObjectURL(blob),
-        filename: relativePath,
-        saveAs: true // Show the Save As dialog
-      });
-    }
     });
   </script>
-  <script src="index.js"></script>
 </body>
 </html>

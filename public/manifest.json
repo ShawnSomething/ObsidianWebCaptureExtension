@@ -11,11 +11,6 @@
         "tabs"
     ],
 
-    "background": {
-        "scripts": ["index.js"],
-        "persistent": false
-      },
-      
     "host_permissions": [
         "http://*/*",
         "https://*/*"
