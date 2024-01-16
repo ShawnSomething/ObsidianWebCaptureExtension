@@ -10,11 +10,8 @@
         "default_title": "Obsidian Capture Tool"
     },
     "permissions": [
-        "scripting",
-        "downloads",
         "tabs",
-        "activeTab",
-        "idle"
+        "storage"
     ],
 
     "host_permissions": [

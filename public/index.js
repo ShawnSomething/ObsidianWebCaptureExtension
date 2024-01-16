@@ -1,18 +1,17 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title");
-  const selectFolderButton = document.getElementById("selectFolder");
   const editorInput = document.getElementById("editor");
 
   function updateTitle() {
     if (typeof chrome !== "undefined" && chrome.tabs) {
       // Running in a Chrome extension environment
-      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const currentURL = tabs[0]?.url;
-        if (currentURL) {
+        if (currentURL && titleInput) {
           titleInput.value = currentURL;
         }
       });
-    } else {
+    } else if (titleInput) {
       // Running on a regular webpage
       titleInput.value = window.location.href;
     }
@@ -21,11 +20,28 @@ document.addEventListener("DOMContentLoaded", function () {
   // Fetch and set the title on page load
   updateTitle();
 
+  // Load the saved text when the popup is opened
+  chrome.storage.sync.get(['savedText'], function (result) {
+    if (result.savedText && editorInput) {
+      editorInput.value = result.savedText;
+    }
+  });
+
+  // Save the text whenever there is a change in the textarea
+  if (editorInput) {
+    editorInput.addEventListener('input', function () {
+      var text = editorInput.value;
+      chrome.storage.sync.set({ 'savedText': text }, function () {
+        console.log('Text saved: ' + text);
+      });
+    });
+  }
+
   // Add click event listener for copying to clipboard on openExtension button click
   document.getElementById('openExtension')?.addEventListener('click', function () {
     // Get the values of titleInput and editorInput
-    const titleValue = titleInput.value;
-    const editorValue = editorInput.value;
+    const titleValue = titleInput ? titleInput.value : '';
+    const editorValue = editorInput ? editorInput.value : '';
 
     // Concatenate the values
     const combinedValue = titleValue + ' ' + editorValue;
@@ -39,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Select the content of the textarea
     tempTextarea.select();
-    
+
     // Copy the selected content to the clipboard
     navigator.clipboard.writeText(combinedValue);
 

@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title") as HTMLInputElement;
-  const selectFolderButton = document.getElementById("selectFolder") as HTMLButtonElement;
   const editorInput = document.getElementById("editor") as HTMLInputElement
 
   function updateTitle() {
@@ -20,6 +19,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Fetch and set the title on page load
   updateTitle();
+
+  // Load the saved text when the popup is opened
+  chrome.storage.sync.get(['savedText'], function(result) {
+    if (result.savedText) {
+      editorInput.value = result.savedText;
+    }
+  });
+
+  // Save the text whenever there is a change in the textarea
+  editorInput.addEventListener('input', function() {
+    var text = editorInput.value;
+    chrome.storage.sync.set({ 'savedText': text }, function() {
+      console.log('Text saved: ' + text);
+    });
+  });
 
   // Add click event listener for copying to clipboard on openExtension button click
   document.getElementById('openExtension')?.addEventListener('click', function () {
