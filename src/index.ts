@@ -35,6 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Add click event listener to clear text in Text Editor field
+  document.getElementById('clear')?.addEventListener('click', function () {
+    editorInput.value = '',
+    chrome.storage.sync.set({ 'savedText': '' }, function() {
+      console.log('Text cleared');
+    });
+  });
+
   // Add click event listener for copying to clipboard on openExtension button click
   document.getElementById('openExtension')?.addEventListener('click', function () {
     // Get the values of titleInput and editorInput
@@ -66,5 +74,4 @@ document.addEventListener("DOMContentLoaded", () => {
       active: true
     });
   });
-  
 });
