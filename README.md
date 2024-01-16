@@ -13,18 +13,15 @@ You can save this to your Obsidian Vault and it will show up there right away
 - Click on Review Notes to open up a new web page
 - Paste your notes in
 - Save it to the file of your choice
+- Notes persists when the extension is closed and opened, so manually clear them out when ready
 
 
 ## Shortcomings (might be addressed in the future)
-- Chrome does not let us download files directly from the extension, so would need to open it up in another web page
+- Chrome does not let us download files directly from the extension, so would need to open it up on another web page
 - There is also a limitation with mirroring the texts from the extension to the other tab
   - In this case, I've opted to copy the texts when the Review Notes button is pressed
       - This then caused another issue with needing to concat the title and the text editor into one
   - Unable to auto-paste the copied text to the new tab, so manual pasting is required
-- Notes do not persist when the extension is closed but the tab is still active
-  - This will be super useful, but I need to figure out how to do that
-- The Review Notes button is still on the different webpage even though it doesn't do anything
-  - I need to get rid of this, but there are some errors and dependencies that come up when I do, will need to sort that out
 
 ## Privacy Policy
 This extension will not obtain, use or distribute any information from the user
