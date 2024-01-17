@@ -8,7 +8,7 @@ You can save this to your Obsidian Vault and it will show up there right away
 - Load the `build` file into the Chrome extensions management
 - Pin it to your Chrome bar
 - When firing it up: the title will auto-populate with your current URL
-(![image](https://github.com/ShawnSomething/ObsidianWebCaptureExtension/assets/107730112/2cac84de-f577-4c70-a631-1d4dfffe9488)
+![image](https://github.com/ShawnSomething/ObsidianWebCaptureExtension/assets/107730112/2cac84de-f577-4c70-a631-1d4dfffe9488)
 
 - Add notes as needed
 - Click on Review Notes to open up a new web page
