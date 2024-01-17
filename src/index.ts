@@ -2,23 +2,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title") as HTMLInputElement;
   const editorInput = document.getElementById("editor") as HTMLInputElement
 
-  function updateTitle() {
+  function updateTitle(callback: (result: string) => void) {
     if (typeof chrome !== "undefined" && chrome.tabs) {
       // Running in a Chrome extension environment
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const currentURL = tabs[0]?.url;
         if (currentURL) {
           titleInput.value = currentURL;
+          callback(currentURL); // Call the callback with the result
         }
       });
     } else {
       // Running on a regular webpage
-      titleInput.value = window.location.href;
+      const currentURL = window.location.href;
+      titleInput.value = currentURL;
+      callback(currentURL); // Call the callback with the result
     }
   }
 
   // Fetch and set the title on page load
-  updateTitle();
+  updateTitle((result) => {
+    // Save the result to chrome.storage.sync
+    chrome.storage.sync.set({ 'savedTitle': result }, () => {
+      console.log('Title saved: ' + result);
+    });
+  });
 
   // Load the saved text when the popup is opened
   chrome.storage.sync.get(['savedText'], function(result) {

@@ -2,7 +2,24 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const selectFolderButton = document.getElementById('selectFolder') as HTMLButtonElement;
+  const titleInput = document.getElementById("title") as HTMLInputElement;
+  const editorInput = document.getElementById("editor") as HTMLInputElement;
+  
+  chrome.storage.sync.get(['savedTitle'], function(result) {
+    const savedTitle = result.savedTitle;
+    if (savedTitle) {
+      titleInput.value = savedTitle;
+    }
+  });
 
+  // Inputting text value from extension to review notes
+  chrome.storage.sync.get(['savedText'], function(result) {
+    if (result.savedText) {
+      editorInput.value = result.savedText;
+    }
+  });
+
+  // downloading notes to local
   if (selectFolderButton) {
     selectFolderButton.addEventListener('click', async () => {
       try {

@@ -1,78 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title");
   const editorInput = document.getElementById("editor");
-
-  function updateTitle() {
+  function updateTitle(callback) {
     if (typeof chrome !== "undefined" && chrome.tabs) {
-      // Running in a Chrome extension environment
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
         const currentURL = tabs[0]?.url;
-        if (currentURL && titleInput) {
+        if (currentURL) {
           titleInput.value = currentURL;
+          callback(currentURL);
         }
       });
-    } else if (titleInput) {
-      // Running on a regular webpage
-      titleInput.value = window.location.href;
+    } else {
+      const currentURL = window.location.href;
+      titleInput.value = currentURL;
+      callback(currentURL);
     }
   }
-
-  // Fetch and set the title on page load
-  updateTitle();
-
-  // Load the saved text when the popup is opened
-  chrome.storage.sync.get(['savedText'], function (result) {
-    if (result.savedText && editorInput) {
+  updateTitle((result) => {
+    chrome.storage.sync.set({savedTitle: result}, () => {
+      console.log("Title saved: " + result);
+    });
+  });
+  chrome.storage.sync.get(["savedText"], function(result) {
+    if (result.savedText) {
       editorInput.value = result.savedText;
     }
   });
-
-  // Save the text whenever there is a change in the textarea
-  if (editorInput) {
-    editorInput.addEventListener('input', function () {
-      var text = editorInput.value;
-      chrome.storage.sync.set({ 'savedText': text }, function () {
-        console.log('Text saved: ' + text);
-      });
+  editorInput.addEventListener("input", function() {
+    var text = editorInput.value;
+    chrome.storage.sync.set({savedText: text}, function() {
+      console.log("Text saved: " + text);
     });
-  }
-
-    // Add click event listener to clear text in Text Editor field
-    document.getElementById('clear')?.addEventListener('click', function () {
-      editorInput.value = '',
-      chrome.storage.sync.set({ 'savedText': '' }, function() {
-        console.log('Text cleared');
-      });
+  });
+  document.getElementById("clear")?.addEventListener("click", function() {
+    editorInput.value = "", chrome.storage.sync.set({savedText: ""}, function() {
+      console.log("Text cleared");
     });
-
-  // Add click event listener for copying to clipboard on openExtension button click
-  document.getElementById('openExtension')?.addEventListener('click', function () {
-    // Get the values of titleInput and editorInput
-    const titleValue = titleInput ? titleInput.value : '';
-    const editorValue = editorInput ? editorInput.value : '';
-
-    // Concatenate the values
-    const combinedValue = titleValue + ' ' + editorValue;
-
-    // Create a temporary textarea element
-    const tempTextarea = document.createElement('textarea');
+  });
+  document.getElementById("openExtension")?.addEventListener("click", function() {
+    const titleValue = titleInput.value;
+    const editorValue = editorInput.value;
+    const combinedValue = titleValue + " " + editorValue;
+    const tempTextarea = document.createElement("textarea");
     tempTextarea.value = combinedValue;
-
-    // Append the textarea to the document body
     document.body.appendChild(tempTextarea);
-
-    // Select the content of the textarea
     tempTextarea.select();
-
-    // Copy the selected content to the clipboard
-    navigator.clipboard.writeText(combinedValue);
-
-    // Remove the temporary textarea
+    navigator.clipboard.writeText("text to be copied");
     document.body.removeChild(tempTextarea);
-
-    // Open the extension page
     chrome.tabs.create({
-      url: 'reviewNotes.html',
+      url: "reviewNotes.html",
       active: true
     });
   });
