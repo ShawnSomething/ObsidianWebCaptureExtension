@@ -23,19 +23,19 @@ document.addEventListener('DOMContentLoaded', () => {
   if (selectFolderButton) {
     selectFolderButton.addEventListener('click', async () => {
       try {
-        const mappedTitleInput = document.getElementById('mappedTitle') as HTMLInputElement;
+        const titleInput = document.getElementById('title') as HTMLInputElement;
         const editorInput = document.getElementById('editor') as HTMLTextAreaElement;
 
-        if (!mappedTitleInput || !editorInput) {
+        if (!titleInput || !editorInput) {
           console.error("Mapped title or editor element not found.");
           return;
         }
 
-        const suggestedName = mappedTitleInput.value || 'Untitled';
+        const suggestedName = titleInput.value || 'Untitled';
         const fileHandle = await (window as any).showSaveFilePicker({ suggestedName: suggestedName + '.md' });
 
         // Get the title and text editor content
-        const title = mappedTitleInput.value;
+        const title = titleInput.value;
         const editorContent = editorInput.value;
 
         // Create an array of parts for the text file

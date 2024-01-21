@@ -16,15 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (selectFolderButton) {
     selectFolderButton.addEventListener("click", async () => {
       try {
-        const mappedTitleInput = document.getElementById("mappedTitle");
+        const titleInput = document.getElementById("title");
         const editorInput2 = document.getElementById("editor");
-        if (!mappedTitleInput || !editorInput2) {
+        if (!titleInput || !editorInput2) {
           console.error("Mapped title or editor element not found.");
           return;
         }
-        const suggestedName = mappedTitleInput.value || "Untitled";
+        const suggestedName = titleInput.value || "Untitled";
         const fileHandle = await window.showSaveFilePicker({suggestedName: suggestedName + ".md"});
-        const title = mappedTitleInput.value;
+        const title = titleInput.value;
         const editorContent = editorInput2.value;
         const textArray = [`# ${title}
 
