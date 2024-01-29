@@ -17,15 +17,5 @@
     "host_permissions": [
         "http://*/*",
         "https://*/*"
-    ],
-
-    "commands": {
-        "openExtensionPopup": {
-          "suggested_key": {
-            "default": "Alt+Q",
-            "mac": "Command+Q"
-          },
-          "description": "Open the extension popup"
-        }
-      }
+    ]
 }
