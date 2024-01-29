@@ -21,5 +21,8 @@ You can save this to your Obsidian Vault and it will show up there right away
 ## Shortcomings (might be addressed in the future)
 - Chrome does not let us download files directly from the extension, so would need to open it up on another web page
 
+## 3 Lessons Learned from this project
+https://shawnsomething.substack.com/p/3-lessons-from-building-a-chrome
+
 ## Privacy Policy
 This extension will not obtain, use or distribute any information from the user
