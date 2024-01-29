@@ -1,6 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title");
   const editorInput = document.getElementById("editor");
+
+  // popup.js
+
+chrome.commands.onCommand.addListener(function (command) {
+  if (command === "openExtensionPopup") {
+    // Open your extension popup here
+    alert('Keyboard shortcut pressed! Open your extension popup.');
+  }
+});
+
   function updateTitle(callback) {
     if (typeof chrome !== "undefined" && chrome.tabs) {
       chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
@@ -52,4 +62,5 @@ document.addEventListener("DOMContentLoaded", () => {
       active: true
     });
   });
+
 });

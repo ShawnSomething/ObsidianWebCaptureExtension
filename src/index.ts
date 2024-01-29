@@ -2,6 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title") as HTMLInputElement;
   const editorInput = document.getElementById("editor") as HTMLInputElement
 
+  chrome.commands.onCommand.addListener((command: string) => {
+    if (command === "openExtensionPopup") {
+      // Open your extension popup here
+      alert('Keyboard shortcut pressed! Open your extension popup.');
+    }
+  });
+
   function updateTitle(callback: (result: string) => void) {
     if (typeof chrome !== "undefined" && chrome.tabs) {
       // Running in a Chrome extension environment
@@ -82,4 +89,5 @@ document.addEventListener("DOMContentLoaded", () => {
       active: true
     });
   });
+
 });

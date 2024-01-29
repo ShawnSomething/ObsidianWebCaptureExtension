@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "version": "1.0.0",
+    "version": "2.0.0",
     "name": "obsidianCaptureTool",
     "description": "Quick Capture for Obsidian",
     "options_page": "reviewNotes.html",
@@ -17,5 +17,15 @@
     "host_permissions": [
         "http://*/*",
         "https://*/*"
-    ]
+    ],
+
+    "commands": {
+        "openExtensionPopup": {
+          "suggested_key": {
+            "default": "Alt+Q",
+            "mac": "Command+Q"
+          },
+          "description": "Open the extension popup"
+        }
+      }
 }
